@@ -9,6 +9,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 import { pgTable } from "./_table";
+import { workspace } from "./workspace";
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
@@ -20,6 +21,7 @@ export const users = pgTable("user", {
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
+  workspaces: many(workspace),
 }));
 
 export const accounts = pgTable(

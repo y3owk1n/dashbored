@@ -34,10 +34,16 @@ CREATE TABLE IF NOT EXISTS "dashbored_verificationToken" (
 	CONSTRAINT dashbored_verificationToken_identifier_token PRIMARY KEY("identifier","token")
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "dashbored_post" (
+CREATE TABLE IF NOT EXISTS "dashbored_users_to_workspaces" (
+	"user_id" text NOT NULL,
+	"workspace_id" text NOT NULL,
+	CONSTRAINT dashbored_users_to_workspaces_user_id_workspace_id PRIMARY KEY("user_id","workspace_id")
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "dashbored_workspace" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
-	"content" text NOT NULL,
+	"content" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -46,6 +52,18 @@ CREATE INDEX IF NOT EXISTS "userId_idx" ON "dashbored_account" ("userId");--> st
 CREATE INDEX IF NOT EXISTS "userId_idx" ON "dashbored_session" ("userId");--> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "dashbored_session" ADD CONSTRAINT "dashbored_session_userId_dashbored_user_id_fk" FOREIGN KEY ("userId") REFERENCES "dashbored_user"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "dashbored_users_to_workspaces" ADD CONSTRAINT "dashbored_users_to_workspaces_user_id_dashbored_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "dashbored_user"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "dashbored_users_to_workspaces" ADD CONSTRAINT "dashbored_users_to_workspaces_workspace_id_dashbored_workspace_id_fk" FOREIGN KEY ("workspace_id") REFERENCES "dashbored_workspace"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

@@ -3,9 +3,9 @@ import { migrate } from "drizzle-orm/postgres-js/migrator";
 import postgres from "postgres";
 
 import * as auth from "./schema/auth";
-import * as post from "./schema/post";
+import * as workspace from "./schema/workspace";
 
-export const schema = { ...auth, ...post };
+export const schema = { ...auth, ...workspace };
 
 export { pgTable as tableCreator } from "./schema/_table";
 

@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "1d02de31-5b04-4e95-a608-2ab052c2b3f7",
+  "id": "296a6143-3d25-4678-8d3a-a0c89333aa19",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "dashbored_account": {
@@ -222,8 +222,65 @@
       },
       "uniqueConstraints": {}
     },
-    "dashbored_post": {
-      "name": "dashbored_post",
+    "dashbored_users_to_workspaces": {
+      "name": "dashbored_users_to_workspaces",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "workspace_id": {
+          "name": "workspace_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "dashbored_users_to_workspaces_user_id_dashbored_user_id_fk": {
+          "name": "dashbored_users_to_workspaces_user_id_dashbored_user_id_fk",
+          "tableFrom": "dashbored_users_to_workspaces",
+          "tableTo": "dashbored_user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "dashbored_users_to_workspaces_workspace_id_dashbored_workspace_id_fk": {
+          "name": "dashbored_users_to_workspaces_workspace_id_dashbored_workspace_id_fk",
+          "tableFrom": "dashbored_users_to_workspaces",
+          "tableTo": "dashbored_workspace",
+          "columnsFrom": [
+            "workspace_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "dashbored_users_to_workspaces_user_id_workspace_id": {
+          "name": "dashbored_users_to_workspaces_user_id_workspace_id",
+          "columns": [
+            "user_id",
+            "workspace_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "dashbored_workspace": {
+      "name": "dashbored_workspace",
       "schema": "",
       "columns": {
         "id": {
@@ -242,7 +299,7 @@
           "name": "content",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",
