@@ -1,11 +1,14 @@
+import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
-import { primaryKey, serial, text, timestamp } from "drizzle-orm/pg-core";
+import { primaryKey, text, timestamp } from "drizzle-orm/pg-core";
 
 import { pgTable } from "./_table";
 import { users } from "./auth";
 
 export const workspace = pgTable("workspace", {
-  id: serial("id").primaryKey(),
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
   title: text("name").notNull(),
   description: text("content"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -13,7 +16,7 @@ export const workspace = pgTable("workspace", {
 });
 
 export const groupsRelations = relations(workspace, ({ many }) => ({
-  usersToGroups: many(usersToWorkspaces),
+  usersToWorkspaces: many(usersToWorkspaces),
 }));
 
 export const usersToWorkspaces = pgTable(

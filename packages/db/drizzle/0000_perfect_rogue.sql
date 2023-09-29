@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS "dashbored_users_to_workspaces" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "dashbored_workspace" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
 	"content" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,

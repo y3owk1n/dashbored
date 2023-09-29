@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "296a6143-3d25-4678-8d3a-a0c89333aa19",
+  "id": "54745387-2bd2-4d21-87fb-3162db454922",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "dashbored_account": {
@@ -285,7 +285,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
