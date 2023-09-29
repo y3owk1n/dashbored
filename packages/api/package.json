@@ -1,0 +1,37 @@
+{
+  "name": "@dashbored/api",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.{mjs,ts,md,json}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dashbored/auth": "^0.1.0",
+    "@dashbored/db": "^0.1.0",
+    "@trpc/client": "^10.38.5",
+    "@trpc/server": "^10.38.5",
+    "superjson": "1.13.3",
+    "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "@dashbored/eslint-config": "^0.2.0",
+    "@dashbored/prettier-config": "^0.1.0",
+    "@dashbored/tsconfig": "^0.1.0",
+    "eslint": "^8.50.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@dashbored/eslint-config/base"
+    ]
+  },
+  "prettier": "@dashbored/prettier-config"
+}

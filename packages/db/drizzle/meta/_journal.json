@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1696007502019,
+      "tag": "0000_curious_shockwave",
+      "breakpoints": true
+    }
+  ]
+}
