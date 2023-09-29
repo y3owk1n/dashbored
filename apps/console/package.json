@@ -16,6 +16,7 @@
     "@dashbored/api": "^0.1.0",
     "@dashbored/auth": "^0.1.0",
     "@dashbored/db": "^0.1.0",
+    "@dashbored/ui": "^0.1.0",
     "@t3-oss/env-nextjs": "^0.6.1",
     "@tanstack/react-query": "^4.35.3",
     "@tanstack/react-query-devtools": "^4.35.3",

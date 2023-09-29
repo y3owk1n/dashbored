@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import "@/styles/globals.css";
+import "@dashbored/tailwind-config/styles.css";
 
 import { headers } from "next/headers";
 
 import { TRPCReactProvider } from "./providers";
 
-const fontSans = Inter({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 export default function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={["font-sans", fontSans.variable].join(" ")}>
+      <body className={["font-sans", inter.variable].join(" ")}>
         <TRPCReactProvider headers={headers()}>
           {props.children}
         </TRPCReactProvider>
