@@ -16,6 +16,7 @@ import {
 } from "@dashbored/ui";
 import { ArrowUpRight } from "lucide-react";
 
+import { SignOut } from "../auth";
 import { socialsConfig } from "../config/socials";
 import { Shell } from "../dashboard/shell";
 
@@ -72,6 +73,8 @@ export async function AppHeader() {
                     <DropdownMenuItem>Billing</DropdownMenuItem>
                     <DropdownMenuItem>Team</DropdownMenuItem>
                     <DropdownMenuItem>Subscription</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <SignOut />
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}

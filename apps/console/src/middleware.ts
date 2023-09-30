@@ -48,7 +48,10 @@ export async function middleware(request: NextRequest) {
 
   if (!session || Object.keys(session).length === 0 || !session.user) {
     return NextResponse.redirect(
-      new URL(`/?callbackUrl=${encodeURIComponent(request.url)}`, origin),
+      new URL(
+        `/sign-in?callbackUrl=${encodeURIComponent(request.url)}`,
+        origin,
+      ),
     );
   }
 
