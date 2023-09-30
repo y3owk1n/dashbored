@@ -58,12 +58,26 @@ export async function middleware(request: NextRequest) {
   if (session.user.workspaces.length > 0) {
     console.log(">>> User has workspace");
 
-    const workspaceSelection = new URL(
-      `/console/${session.user.workspaces[0]?.slug}/monitors`,
-      origin,
+    const splittedPathName = request.nextUrl.pathname.split("/");
+
+    const slug = splittedPathName[2];
+
+    const isSlugOwner = session.user.workspaces.findIndex(
+      (ws) => ws.slug === slug,
     );
-    console.log(`>>> Redirecting to ${workspaceSelection.toString()}`);
-    return NextResponse.redirect(workspaceSelection);
+
+    if (isSlugOwner === -1) {
+      const workspaceSelection = new URL(
+        `/console/${session.user.workspaces[0]?.slug}/monitors`,
+        origin,
+      );
+      console.log(
+        `>>> No slug found, redirecting to first found slug: ${workspaceSelection.toString()}`,
+      );
+      return NextResponse.redirect(workspaceSelection);
+    }
+
+    return NextResponse.next();
   }
 
   if (request.nextUrl.pathname !== "/console/onboarding") {

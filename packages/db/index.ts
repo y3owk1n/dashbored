@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
-import { Client, Pool } from "pg";
+import { Pool } from "pg";
 
 import * as auth from "./schema/auth";
 import * as workspace from "./schema/workspace";
@@ -20,12 +20,13 @@ const queryPool = new Pool({
 export const db = drizzle(queryPool, { schema });
 
 // >>> Migrate
-const migrationClient = new Client({
-  connectionString: process.env.DATABASE_URL,
-});
+try {
+  console.log(">>> Migration Start");
+  await migrate(db, {
+    migrationsFolder: "../../packages/db/drizzle",
+  });
 
-await migrationClient.connect();
-
-await migrate(drizzle(migrationClient), {
-  migrationsFolder: "../../packages/db/drizzle",
-});
+  console.log(">>> Migration Complete");
+} catch (error) {
+  console.log(error);
+}

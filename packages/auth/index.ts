@@ -46,7 +46,7 @@ export const {
   callbacks: {
     session: async ({ session, user }) => {
       let currentWorkspaces: Session["user"]["workspaces"] = [];
-      if (session.user) {
+      if (user) {
         const userWithWorkspace = await db
           .select()
           .from(usersToWorkspaces)
@@ -54,7 +54,7 @@ export const {
             workspaces,
             eq(usersToWorkspaces.workspaceId, workspaces.id),
           )
-          .where(eq(usersToWorkspaces.userId, session.user.id));
+          .where(eq(usersToWorkspaces.userId, user.id));
 
         if (userWithWorkspace.length === 0) {
           currentWorkspaces = [];
