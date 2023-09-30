@@ -17,8 +17,10 @@
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
     "drizzle-orm": "^0.28.6",
+    "drizzle-zod": "^0.5.1",
     "pg": "^8.11.3",
-    "postgres": "^3.3.5"
+    "postgres": "^3.3.5",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@dashbored/eslint-config": "^0.2.0",

@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "@dashbored/tailwind-config/styles.css";
 
 import { headers } from "next/headers";
+import { Toaster } from "@/components/toaster";
 import { cn } from "@dashbored/utils";
 
 import { TRPCReactProvider } from "./providers";
@@ -41,6 +42,7 @@ export default function Layout(props: { children: React.ReactNode }) {
         <TRPCReactProvider headers={headers()}>
           {props.children}
         </TRPCReactProvider>
+        <Toaster />
       </body>
     </html>
   );

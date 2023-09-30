@@ -1,11 +1,7 @@
 const onboardingConfig = [
   {
-    title: "What is a monitor?",
-    text: "A monitor is a website or api endpoint that you are going to ping on a regular basis.",
-  },
-  {
-    title: "How to create monitors?",
-    text: "You can create a monitor like you are about to via our dashboard or with our API. E.g. you can create a monitor for every instance you deploy programmatically.",
+    title: "What is a workspace?",
+    text: "A workspace is that will contain a dashboard that can be either shared with or without members.",
   },
 ] as const;
 

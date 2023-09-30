@@ -1,6 +1,8 @@
 import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
 import { primaryKey, text, timestamp } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
 
 import { pgTable } from "./_table";
 import { users } from "./auth";
@@ -8,15 +10,22 @@ import { users } from "./auth";
 export const workspaces = pgTable("workspace", {
   id: text("id")
     .$defaultFn(() => createId())
-    .primaryKey(),
+    .primaryKey()
+    .notNull(),
   title: text("name").notNull(),
   slug: text("slug").unique().notNull(),
-  description: text("content"),
+  description: text("content").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export type Workspaces = typeof workspaces.$inferSelect;
+
+export const insertWorkspaceSchema = createInsertSchema(workspaces, {
+  title: z.string().min(1),
+  slug: z.string().min(1),
+  description: z.string().min(1),
+});
 
 export const workspacesRelations = relations(workspaces, ({ many }) => ({
   usersToWorkspaces: many(usersToWorkspaces),
@@ -35,6 +44,14 @@ export const usersToWorkspaces = pgTable(
   (t) => ({
     pk: primaryKey(t.userId, t.workspaceId),
   }),
+);
+
+export const insertUsersToWorkspacesSchema = createInsertSchema(
+  usersToWorkspaces,
+  {
+    userId: z.string().cuid(),
+    workspaceId: z.string().cuid(),
+  },
 );
 
 export const usersToWorkspacessRelations = relations(
