@@ -17,12 +17,14 @@
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
     "drizzle-orm": "^0.28.6",
+    "pg": "^8.11.3",
     "postgres": "^3.3.5"
   },
   "devDependencies": {
     "@dashbored/eslint-config": "^0.2.0",
     "@dashbored/prettier-config": "^0.1.0",
     "@dashbored/tsconfig": "^0.1.0",
+    "@types/pg": "^8.10.3",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.50.0",

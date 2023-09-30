@@ -1,7 +1,11 @@
 import Google from "@auth/core/providers/google";
 import type { DefaultSession } from "@auth/core/types";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import { db, tableCreator } from "@dashbored/db";
+import { db, eq, tableCreator } from "@dashbored/db";
+import { users } from "@dashbored/db/schema/auth";
+import type { Workspaces } from "@dashbored/db/schema/workspace";
+import { usersToWorkspaces, workspaces } from "@dashbored/db/schema/workspace";
+import type { Session } from "next-auth";
 import NextAuth from "next-auth";
 
 import { env } from "./env.mjs";
@@ -16,6 +20,7 @@ declare module "next-auth" {
   interface Session {
     user: {
       id: string;
+      workspaces: Pick<Workspaces, "id" | "slug">[];
     } & DefaultSession["user"];
   }
 }
@@ -40,13 +45,36 @@ export const {
     }),
   ],
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    session: async ({ session, user }) => {
+      let currentWorkspaces: Session["user"]["workspaces"] = [];
+      if (session.user) {
+        const userWithWorkspace = await db
+          .select()
+          .from(usersToWorkspaces)
+          .where(eq(usersToWorkspaces.userId, session.user.id))
+          .leftJoin(workspaces, eq(users.id, usersToWorkspaces.userId));
+
+        if (userWithWorkspace.length === 0) {
+          currentWorkspaces = [];
+        } else {
+          currentWorkspaces = userWithWorkspace.map((ws) => {
+            return {
+              id: ws.workspace!.id,
+              slug: ws.workspace!.slug,
+            };
+          });
+        }
+      }
+
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          workspaces: currentWorkspaces,
+          id: user.id,
+        },
+      };
+    },
 
     // @TODO - if you wanna have auth on the edge
     // jwt: ({ token, profile }) => {

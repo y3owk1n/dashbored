@@ -5,17 +5,20 @@ import { primaryKey, text, timestamp } from "drizzle-orm/pg-core";
 import { pgTable } from "./_table";
 import { users } from "./auth";
 
-export const workspace = pgTable("workspace", {
+export const workspaces = pgTable("workspace", {
   id: text("id")
     .$defaultFn(() => createId())
     .primaryKey(),
   title: text("name").notNull(),
+  slug: text("slug").unique().notNull(),
   description: text("content"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-export const groupsRelations = relations(workspace, ({ many }) => ({
+export type Workspaces = typeof workspaces.$inferSelect;
+
+export const workspacesRelations = relations(workspaces, ({ many }) => ({
   usersToWorkspaces: many(usersToWorkspaces),
 }));
 
@@ -27,19 +30,19 @@ export const usersToWorkspaces = pgTable(
       .references(() => users.id),
     workspaceId: text("workspace_id")
       .notNull()
-      .references(() => workspace.id),
+      .references(() => workspaces.id),
   },
   (t) => ({
     pk: primaryKey(t.userId, t.workspaceId),
   }),
 );
 
-export const usersToGroupsRelations = relations(
+export const usersToWorkspacessRelations = relations(
   usersToWorkspaces,
   ({ one }) => ({
-    group: one(workspace, {
+    workspace: one(workspaces, {
       fields: [usersToWorkspaces.workspaceId],
-      references: [workspace.id],
+      references: [workspaces.id],
     }),
     user: one(users, {
       fields: [usersToWorkspaces.userId],
