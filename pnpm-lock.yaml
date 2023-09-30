@@ -41,6 +41,9 @@ importers:
       '@dashbored/ui':
         specifier: ^0.1.0
         version: link:../../packages/ui
+      '@dashbored/utils':
+        specifier: ^0.1.0
+        version: link:../../packages/utils
       '@t3-oss/env-nextjs':
         specifier: ^0.6.1
         version: 0.6.1(typescript@5.2.2)(zod@3.22.2)

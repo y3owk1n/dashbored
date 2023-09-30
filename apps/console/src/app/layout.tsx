@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "@dashbored/tailwind-config/styles.css";
 
 import { headers } from "next/headers";
+import { cn } from "@dashbored/utils";
 
 import { TRPCReactProvider } from "./providers";
 
@@ -31,7 +32,12 @@ export const metadata: Metadata = {
 export default function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={["font-sans", inter.variable].join(" ")}>
+      <body
+        className={cn(
+          "grainy flex min-h-full flex-col font-sans antialiased",
+          inter.variable,
+        )}
+      >
         <TRPCReactProvider headers={headers()}>
           {props.children}
         </TRPCReactProvider>
