@@ -68,7 +68,7 @@ export async function middleware(request: NextRequest) {
 
     if (isSlugOwner === -1) {
       const workspaceSelection = new URL(
-        `/console/${session.user.workspaces[0]?.slug}/monitors`,
+        `/console/${session.user.workspaces[0]?.slug}/spaces`,
         origin,
       );
       console.log(

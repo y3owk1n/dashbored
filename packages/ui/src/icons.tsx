@@ -1,10 +1,14 @@
-import { Loader2Icon } from "lucide-react";
+import { Blocks, Cog, Loader2Icon, Orbit, User } from "lucide-react";
 import type { LucideIcon, LucideProps } from "lucide-react";
 
 export type Icon = LucideIcon;
 export type ValidIcon = keyof typeof Icons;
 
 export const Icons = {
+  orbit: Orbit,
+  blocks: Blocks,
+  user: User,
+  cog: Cog,
   loader: Loader2Icon,
   github: (props: LucideProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
