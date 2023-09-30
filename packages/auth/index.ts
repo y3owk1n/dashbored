@@ -2,7 +2,6 @@ import Google from "@auth/core/providers/google";
 import type { DefaultSession } from "@auth/core/types";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db, eq, tableCreator } from "@dashbored/db";
-import { users } from "@dashbored/db/schema/auth";
 import type { Workspaces } from "@dashbored/db/schema/workspace";
 import { usersToWorkspaces, workspaces } from "@dashbored/db/schema/workspace";
 import type { Session } from "next-auth";
@@ -51,8 +50,11 @@ export const {
         const userWithWorkspace = await db
           .select()
           .from(usersToWorkspaces)
-          .where(eq(usersToWorkspaces.userId, session.user.id))
-          .leftJoin(workspaces, eq(users.id, usersToWorkspaces.userId));
+          .leftJoin(
+            workspaces,
+            eq(usersToWorkspaces.workspaceId, workspaces.id),
+          )
+          .where(eq(usersToWorkspaces.userId, session.user.id));
 
         if (userWithWorkspace.length === 0) {
           currentWorkspaces = [];

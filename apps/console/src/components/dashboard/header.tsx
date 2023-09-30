@@ -1,0 +1,45 @@
+import { Skeleton } from "@dashbored/ui";
+import { cn } from "@dashbored/utils";
+
+interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  title: string;
+  description?: string | null;
+  actions?: React.ReactNode | React.ReactNode[];
+}
+
+function Header({ title, description, className, actions }: HeaderProps) {
+  return (
+    <div
+      className={cn(
+        "col-span-full mr-12 flex items-start justify-between lg:mr-0",
+        className,
+      )}
+    >
+      <div className="grid w-full gap-1">
+        <h1 className="text-3xl font-extrabold">{title}</h1>
+        {description ? (
+          <p className="text-muted-foreground">{description}</p>
+        ) : null}
+      </div>
+      {actions ? (
+        <div className="flex items-center gap-2">{actions}</div>
+      ) : null}
+    </div>
+  );
+}
+
+function HeaderSkeleton({ children }: { children?: React.ReactNode }) {
+  return (
+    <div className="col-span-full mr-12 flex w-full justify-between lg:mr-0">
+      <div className="grid w-full gap-3">
+        <Skeleton className="h-8 w-full max-w-[200px]" />
+        <Skeleton className="h-4 w-full max-w-[300px]" />
+      </div>
+      {children}
+    </div>
+  );
+}
+
+Header.Skeleton = HeaderSkeleton;
+
+export { Header };

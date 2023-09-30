@@ -66,11 +66,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(workspaceSelection);
   }
 
-  // If no workspace, redirect to onboarding
-  console.log(`>>> User does not have workspace`);
-  console.log(`>>> Redirecting to onboarding`);
-  const onboarding = new URL(`/app/onboarding`, origin);
-  return NextResponse.redirect(onboarding);
+  if (request.nextUrl.pathname !== "/console/onboarding") {
+    // If no workspace, redirect to onboarding
+    console.log(`>>> User does not have workspace`);
+    console.log(`>>> Redirecting to onboarding`);
+    const onboarding = new URL(`/console/onboarding`, origin);
+    return NextResponse.redirect(onboarding);
+  }
 }
 
 export const config = {
