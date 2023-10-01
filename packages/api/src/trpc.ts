@@ -160,6 +160,25 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
 });
 
 /**
+ * Reusable middleware that enforces logged in users to have workspace before running the
+ * procedure
+ */
+const enforceUserHasWorkspace = t.middleware(({ ctx, next }) => {
+  if (!ctx.currentWorkspace) {
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: "Unable to get current workspace",
+    });
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      currentWorkspace: ctx.currentWorkspace,
+    },
+  });
+});
+
+/**
  * Protected (authed) procedure
  *
  * If you want a query or mutation to ONLY be accessible to logged in users, use
@@ -169,3 +188,6 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+export const protectedProcedureWithWorkspace = protectedProcedure.use(
+  enforceUserHasWorkspace,
+);

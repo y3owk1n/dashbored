@@ -3,46 +3,30 @@ import { insertSpaceSchema, spaces } from "@dashbored/db/schema/space";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedureWithWorkspace } from "../trpc";
 
 export const spaceRouter = createTRPCRouter({
-  all: protectedProcedure.query(async ({ ctx }) => {
-    // return ctx.db.select().from(schema.post).orderBy(desc(schema.post.id));
-    if (!ctx.currentWorkspace) {
-      throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "Unable to get current workspace",
-      });
-    }
+  all: protectedProcedureWithWorkspace.query(async ({ ctx }) => {
     return await ctx.db.query.spaces.findMany({
       where: eq(spaces.workspaceId, ctx.currentWorkspace.id),
-      orderBy: desc(spaces.id),
+      orderBy: desc(spaces.updatedAt),
     });
   }),
 
-  byId: protectedProcedure
+  byId: protectedProcedureWithWorkspace
     .input(z.object({ slug: z.string() }))
     .query(async ({ ctx, input }) => {
-      // return ctx.db
-      //   .select()
-      //   .from(schema.post)
-      //   .where(eq(schema.post.id, input.id));
-
       return await ctx.db.query.spaces.findFirst({
-        where: eq(spaces.slug, input.slug),
+        where: and(
+          eq(spaces.slug, input.slug),
+          eq(spaces.workspaceId, ctx.currentWorkspace.id),
+        ),
       });
     }),
 
-  checkUniqueSlug: protectedProcedure
+  checkUniqueSlug: protectedProcedureWithWorkspace
     .input(z.object({ slug: z.string().toLowerCase() }))
     .mutation(async ({ ctx, input }) => {
-      if (!ctx.currentWorkspace) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Unable to get current workspace",
-        });
-      }
-
       if (["create", "edit"].includes(input.slug)) {
         return false;
       }
@@ -57,18 +41,10 @@ export const spaceRouter = createTRPCRouter({
       return matchedSlugs.length > 0 ? false : true;
     }),
 
-  create: protectedProcedure
+  create: protectedProcedureWithWorkspace
     .input(insertSpaceSchema)
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.transaction(async (tx) => {
-        if (!ctx.currentWorkspace) {
-          tx.rollback();
-          throw new TRPCError({
-            code: "NOT_FOUND",
-            message: "Unable to get current workspace",
-          });
-        }
-
         const newSpace = await tx
           .insert(schema.spaces)
           .values({
