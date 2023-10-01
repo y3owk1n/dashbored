@@ -89,4 +89,22 @@ export const spaceRouter = createTRPCRouter({
         )
         .returning();
     }),
+
+  deleteBySlug: protectedProcedureWithWorkspace
+    .input(
+      z.object({
+        spaceSlug: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db
+        .delete(schema.spaces)
+        .where(
+          and(
+            eq(spaces.workspaceId, ctx.currentWorkspace.id),
+            eq(spaces.slug, input.spaceSlug),
+          ),
+        )
+        .returning();
+    }),
 });
