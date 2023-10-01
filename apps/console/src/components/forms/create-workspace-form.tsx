@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { api } from "@/utils/api";
+import { api } from "@/utils/client-api";
 import { insertWorkspaceSchema } from "@dashbored/db/schema/workspace";
 import { useDebounce, useToast } from "@dashbored/hooks";
 import {
@@ -46,16 +46,13 @@ export function CreateWorkspaceForm() {
   const watchTitle = form.watch("title");
   const debouncedSlug = useDebounce(watchSlug, 1000);
 
-  const checkUniqueSlugMutation = api.workspace.checkUniqueSlug.useMutation();
-  const createWorkspace = api.workspace.create.useMutation();
-
   const checkUniqueSlug = useCallback(async () => {
-    const isUnique = await checkUniqueSlugMutation.mutateAsync({
+    const isUnique = await api.workspace.checkUniqueSlug.mutate({
       slug: debouncedSlug,
     });
 
     return isUnique;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [debouncedSlug]);
 
   useEffect(() => {
@@ -82,7 +79,7 @@ export function CreateWorkspaceForm() {
   function onSubmit(values: z.infer<typeof insertWorkspaceSchema>) {
     startTransition(async () => {
       try {
-        const createdWorkspace = await createWorkspace.mutateAsync(values);
+        const createdWorkspace = await api.workspace.create.mutate(values);
 
         toast({
           title: "Workspace created",

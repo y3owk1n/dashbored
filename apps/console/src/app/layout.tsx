@@ -3,11 +3,8 @@ import { Inter } from "next/font/google";
 
 import "@dashbored/tailwind-config/styles.css";
 
-import { headers } from "next/headers";
 import { Toaster } from "@/components/toaster";
 import { cn } from "@dashbored/utils";
-
-import { TRPCReactProvider } from "./providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,9 +36,7 @@ export default function Layout(props: { children: React.ReactNode }) {
           inter.variable,
         )}
       >
-        <TRPCReactProvider headers={headers()}>
-          {props.children}
-        </TRPCReactProvider>
+        {props.children}
         <Toaster />
       </body>
     </html>

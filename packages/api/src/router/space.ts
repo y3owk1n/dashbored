@@ -8,7 +8,14 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 export const spaceRouter = createTRPCRouter({
   all: protectedProcedure.query(async ({ ctx }) => {
     // return ctx.db.select().from(schema.post).orderBy(desc(schema.post.id));
+    if (!ctx.currentWorkspace) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Unable to get current workspace",
+      });
+    }
     return await ctx.db.query.spaces.findMany({
+      where: eq(spaces.workspaceId, ctx.currentWorkspace.id),
       orderBy: desc(spaces.id),
     });
   }),

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { api } from "@/utils/api";
+import { api } from "@/utils/client-api";
 import { insertSpaceSchema } from "@dashbored/db/schema/space";
 import { useDebounce, useToast } from "@dashbored/hooks";
 import {
@@ -46,11 +46,8 @@ export function CreateSpaceForm() {
   const watchTitle = form.watch("title");
   const debouncedSlug = useDebounce(watchSlug, 1000);
 
-  const checkUniqueSlugMutation = api.space.checkUniqueSlug.useMutation();
-  const createSpace = api.space.create.useMutation();
-
   const checkUniqueSlug = useCallback(async () => {
-    const isUnique = await checkUniqueSlugMutation.mutateAsync({
+    const isUnique = await api.space.checkUniqueSlug.mutate({
       slug: debouncedSlug,
     });
 
@@ -82,7 +79,7 @@ export function CreateSpaceForm() {
   function onSubmit(values: Schema) {
     startTransition(async () => {
       try {
-        const createdSpace = await createSpace.mutateAsync(values);
+        const createdSpace = await api.space.create.mutate(values);
 
         toast({
           title: "New space created",
