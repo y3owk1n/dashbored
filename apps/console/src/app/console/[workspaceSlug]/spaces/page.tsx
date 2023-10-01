@@ -38,7 +38,7 @@ export default async function SpacesPage() {
                 <DataCard
                   key={space.id}
                   {...space}
-                  action={<SpacesCardAction />}
+                  action={<SpacesCardAction spaceSlug={space.slug} />}
                 />
               ))}
             </div>

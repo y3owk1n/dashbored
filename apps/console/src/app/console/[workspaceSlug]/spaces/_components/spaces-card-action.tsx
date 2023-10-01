@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   Button,
   DropdownMenu,
@@ -9,7 +10,11 @@ import {
   Icons,
 } from "@dashbored/ui";
 
-export function SpacesCardAction() {
+interface SpacesCardActionProps {
+  spaceSlug: string;
+}
+
+export function SpacesCardAction({ spaceSlug }: SpacesCardActionProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -27,8 +32,10 @@ export function SpacesCardAction() {
         className="w-[200px]"
         forceMount
       >
-        <DropdownMenuItem>
-          <Icons.edit3 className="mr-2 h-4 w-4" /> Edit Space
+        <DropdownMenuItem asChild>
+          <Link href={`./spaces/edit/${spaceSlug}`}>
+            <Icons.edit3 className="mr-2 h-4 w-4" /> Edit Space
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuLabel className="text-destructive">

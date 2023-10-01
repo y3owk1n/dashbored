@@ -34,7 +34,7 @@ export const spaceRouter = createTRPCRouter({
       const matchedSlugs = await ctx.db.query.spaces.findMany({
         where: and(
           eq(spaces.slug, input.slug),
-          eq(spaces.workspaceId, ctx.currentWorkspace?.id),
+          eq(spaces.workspaceId, ctx.currentWorkspace.id),
         ),
       });
 
@@ -67,7 +67,26 @@ export const spaceRouter = createTRPCRouter({
       });
     }),
 
-  // delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
-  //   return ctx.db.delete(schema.post).where(eq(schema.post.id, input));
-  // }),
+  update: protectedProcedureWithWorkspace
+    .input(
+      z.object({
+        data: insertSpaceSchema,
+        spaceId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db
+        .update(schema.spaces)
+        .set({
+          ...input.data,
+          updatedAt: new Date(),
+        })
+        .where(
+          and(
+            eq(spaces.workspaceId, ctx.currentWorkspace.id),
+            eq(spaces.id, input.spaceId),
+          ),
+        )
+        .returning();
+    }),
 });
