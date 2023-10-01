@@ -44,52 +44,14 @@ export const {
     }),
   ],
   callbacks: {
-    session: async ({ session, user }) => {
-      let currentWorkspaces: Session["user"]["workspaces"] = [];
-      if (user) {
-        const userWithWorkspace = await db
-          .select()
-          .from(usersToWorkspaces)
-          .leftJoin(
-            workspaces,
-            eq(usersToWorkspaces.workspaceId, workspaces.id),
-          )
-          .where(eq(usersToWorkspaces.userId, user.id));
-
-        if (userWithWorkspace.length === 0) {
-          currentWorkspaces = [];
-        } else {
-          currentWorkspaces = userWithWorkspace.map((ws) => {
-            return {
-              id: ws.workspace!.id,
-              slug: ws.workspace!.slug,
-            };
-          });
-        }
-      }
-
+    session: ({ session, user }) => {
       return {
         ...session,
         user: {
           ...session.user,
-          workspaces: currentWorkspaces,
           id: user.id,
         },
       };
     },
-
-    // @TODO - if you wanna have auth on the edge
-    // jwt: ({ token, profile }) => {
-    //   if (profile?.id) {
-    //     token.id = profile.id;
-    //     token.image = profile.picture;
-    //   }
-    //   return token;
-    // },
-
-    // @TODO
-    // authorized({ request, auth }) {
-    //   return !!auth?.user
-    // }
   },
 });

@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+// import { auth as middleware } from "@dashbored/auth";
 import type { Session } from "@dashbored/auth";
 
 const securePrefix = `__Secure-`;
@@ -13,7 +14,6 @@ const secureCallbackUrlKey = `${securePrefix}${callbackUrlKey}`;
 
 export async function middleware(request: NextRequest) {
   // Getting cookies from the request
-
   let sessionToken;
   let csrfToken;
   let callbackurl;
@@ -38,7 +38,7 @@ export async function middleware(request: NextRequest) {
       (sessionToken ? `${sessionTokenKey}=${sessionToken}` : "");
   }
 
-  const sessionResponse = await fetch(`${origin}/api/auth/session`, {
+  const sessionResponse = await fetch(`${origin}/api/proxy-auth`, {
     headers: {
       cookie: requestCookie,
     },
@@ -55,7 +55,7 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  console.log(">>> Found user");
+  console.log(">>> Found user", { session });
 
   // If there's workspace for the user, redirect to dashboard
   if (session.user.workspaces.length > 0) {
