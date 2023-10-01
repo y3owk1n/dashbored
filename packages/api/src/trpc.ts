@@ -59,8 +59,8 @@ export const createTRPCContext = async (opts: {
 
   let currentWorkspace: Session["user"]["workspaces"][number] | null = null;
 
-  if (opts.req?.url) {
-    const currentReqPathname = new URL(opts.req.headers.get("referer") ?? "/")
+  if (opts.req?.url && opts.req.headers.get("referer")) {
+    const currentReqPathname = new URL(opts.req.headers.get("referer")!)
       .pathname;
     const splittedCurrentReqUrl = currentReqPathname.split("/");
 
