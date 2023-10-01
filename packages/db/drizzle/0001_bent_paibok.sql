@@ -1,0 +1,1 @@
+ALTER TABLE "dashbored_space" DROP CONSTRAINT "dashbored_space_slug_unique";

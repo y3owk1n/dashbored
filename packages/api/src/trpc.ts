@@ -6,13 +6,13 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
+import { auth } from "@dashbored/auth";
+import type { Session } from "@dashbored/auth";
+import { db, eq } from "@dashbored/db";
+import { usersToWorkspaces, workspaces } from "@dashbored/db/schema/workspace";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
-
-import { auth } from "@dashbored/auth";
-import type { Session } from "@dashbored/auth";
-import { db } from "@dashbored/db";
 
 /**
  * 1. CONTEXT
@@ -25,6 +25,7 @@ import { db } from "@dashbored/db";
  */
 interface CreateContextOptions {
   session: Session | null;
+  currentWorkspace: Session["user"]["workspaces"][number] | null;
 }
 
 /**
@@ -39,6 +40,7 @@ interface CreateContextOptions {
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
+    currentWorkspace: opts.currentWorkspace,
     db,
   };
 };
@@ -55,10 +57,47 @@ export const createTRPCContext = async (opts: {
   const session = opts.auth ?? (await auth());
   const source = opts.req?.headers.get("x-trpc-source") ?? "unknown";
 
-  console.log(">>> tRPC Request from", source, "by", session?.user);
+  let currentWorkspace: Session["user"]["workspaces"][number] | null = null;
+
+  if (opts.req?.url) {
+    const currentReqPathname = new URL(opts.req.headers.get("referer") ?? "/")
+      .pathname;
+    const splittedCurrentReqUrl = currentReqPathname.split("/");
+
+    const slug = splittedCurrentReqUrl[2];
+
+    const userWithWorkspace = await db
+      .select()
+      .from(usersToWorkspaces)
+      .leftJoin(workspaces, eq(usersToWorkspaces.workspaceId, workspaces.id))
+      .where(eq(usersToWorkspaces.userId, session.user.id));
+
+    if (userWithWorkspace.length > 0) {
+      const workspaceExists = userWithWorkspace.find(
+        (ws) => ws.workspace?.slug === slug,
+      );
+
+      if (workspaceExists?.workspace) {
+        currentWorkspace = {
+          id: workspaceExists.workspace.id,
+          slug: workspaceExists.workspace.slug,
+        };
+      }
+    }
+  }
+
+  console.log(
+    ">>> tRPC Request from",
+    source,
+    "by",
+    session?.user,
+    "at workspace",
+    currentWorkspace,
+  );
 
   return createInnerTRPCContext({
     session,
+    currentWorkspace,
   });
 };
 

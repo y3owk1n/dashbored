@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "0cf6eb1d-5494-4d87-85bf-4ec58cacb38f",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "719ac159-0a7f-4be4-97b0-5e5385b45ec2",
+  "prevId": "0cf6eb1d-5494-4d87-85bf-4ec58cacb38f",
   "tables": {
     "dashbored_account": {
       "name": "dashbored_account",
@@ -275,13 +275,6 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "dashbored_space_slug_unique": {
-          "name": "dashbored_space_slug_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "slug"
-          ]
-        },
         "dashbored_space_slug_workspace_id_unique": {
           "name": "dashbored_space_slug_workspace_id_unique",
           "nullsNotDistinct": false,

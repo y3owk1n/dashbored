@@ -35,13 +35,15 @@ CREATE TABLE IF NOT EXISTS "dashbored_verificationToken" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "dashbored_space" (
-	"id" text NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
+	"workspace_id" text NOT NULL,
 	"name" text NOT NULL,
 	"slug" text NOT NULL,
 	"description" text NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
-	CONSTRAINT "dashbored_space_slug_unique" UNIQUE("slug")
+	CONSTRAINT "dashbored_space_slug_unique" UNIQUE("slug"),
+	CONSTRAINT "dashbored_space_slug_workspace_id_unique" UNIQUE("slug","workspace_id")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "dashbored_users_to_workspaces" (

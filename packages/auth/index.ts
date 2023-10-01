@@ -1,10 +1,8 @@
 import Google from "@auth/core/providers/google";
 import type { DefaultSession } from "@auth/core/types";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import { db, eq, tableCreator } from "@dashbored/db";
+import { db, tableCreator } from "@dashbored/db";
 import type { Workspaces } from "@dashbored/db/schema/workspace";
-import { usersToWorkspaces, workspaces } from "@dashbored/db/schema/workspace";
-import type { Session } from "next-auth";
 import NextAuth from "next-auth";
 
 import { env } from "./env.mjs";
