@@ -10,5 +10,6 @@ export * from "./textarea";
 export * from "./toast";
 export * from "./sheet";
 export * from "./card";
-export * from "./separator.tsx";
+export * from "./separator";
+export * from "./modal";
 export * from "./skeleton";
