@@ -34,6 +34,16 @@ CREATE TABLE IF NOT EXISTS "dashbored_verificationToken" (
 	CONSTRAINT dashbored_verificationToken_identifier_token PRIMARY KEY("identifier","token")
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "dashbored_space" (
+	"id" text NOT NULL,
+	"name" text NOT NULL,
+	"slug" text NOT NULL,
+	"description" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "dashbored_space_slug_unique" UNIQUE("slug")
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "dashbored_users_to_workspaces" (
 	"user_id" text NOT NULL,
 	"workspace_id" text NOT NULL,
@@ -43,9 +53,11 @@ CREATE TABLE IF NOT EXISTS "dashbored_users_to_workspaces" (
 CREATE TABLE IF NOT EXISTS "dashbored_workspace" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
-	"content" text,
+	"slug" text NOT NULL,
+	"description" text NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "dashbored_workspace_slug_unique" UNIQUE("slug")
 );
 --> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "userId_idx" ON "dashbored_account" ("userId");--> statement-breakpoint

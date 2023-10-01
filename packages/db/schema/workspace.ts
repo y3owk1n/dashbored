@@ -6,6 +6,7 @@ import { z } from "zod";
 
 import { pgTable } from "./_table";
 import { users } from "./auth";
+import { spaces } from "./space";
 
 export const workspaces = pgTable("workspace", {
   id: text("id")
@@ -14,7 +15,7 @@ export const workspaces = pgTable("workspace", {
     .notNull(),
   title: text("name").notNull(),
   slug: text("slug").unique().notNull(),
-  description: text("content").notNull(),
+  description: text("description").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -29,6 +30,7 @@ export const insertWorkspaceSchema = createInsertSchema(workspaces, {
 
 export const workspacesRelations = relations(workspaces, ({ many }) => ({
   usersToWorkspaces: many(usersToWorkspaces),
+  spaces: many(spaces),
 }));
 
 export const usersToWorkspaces = pgTable(

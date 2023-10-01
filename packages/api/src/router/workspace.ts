@@ -29,6 +29,22 @@ export const workspaceRouter = createTRPCRouter({
       });
     }),
 
+  pollSessionWithWorkspace: protectedProcedure
+    .input(z.object({ workspaceSlug: z.string() }))
+    .mutation(({ ctx, input }) => {
+      const foundWorkspaceInSession = ctx.session.user.workspaces.findIndex(
+        (ws) => ws.slug === input.workspaceSlug,
+      );
+
+      if (foundWorkspaceInSession === -1)
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workspace not found in session",
+        });
+
+      return { success: true, workspaceSlug: input.workspaceSlug };
+    }),
+
   checkUniqueSlug: protectedProcedure
     .input(z.object({ slug: z.string().toLowerCase() }))
     .mutation(async ({ ctx, input }) => {

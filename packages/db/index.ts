@@ -1,5 +1,4 @@
 import { drizzle } from "drizzle-orm/node-postgres";
-import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { Pool } from "pg";
 
 import * as auth from "./schema/auth";
@@ -20,13 +19,13 @@ const queryPool = new Pool({
 export const db = drizzle(queryPool, { schema });
 
 // >>> Migrate
-try {
-  console.log(">>> Migration Start");
-  await migrate(db, {
-    migrationsFolder: "../../packages/db/drizzle",
-  });
-
-  console.log(">>> Migration Complete");
-} catch (error) {
-  console.log(error);
-}
+// try {
+//   console.log(">>> Migration Start");
+//   await migrate(db, {
+//     migrationsFolder: "../../packages/db/drizzle",
+//   });
+//
+//   console.log(">>> Migration Complete");
+// } catch (error) {
+//   console.log(error);
+// }

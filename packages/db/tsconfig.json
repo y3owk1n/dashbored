@@ -3,6 +3,9 @@
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
+  "ts-node": {
+    "esm": true
+  },
   "include": ["."],
   "exclude": ["node_modules"]
 }

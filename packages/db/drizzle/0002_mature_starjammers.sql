@@ -1,1 +1,0 @@
-ALTER TABLE "dashbored_workspace" ALTER COLUMN "content" SET NOT NULL;
