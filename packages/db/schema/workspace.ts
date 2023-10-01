@@ -42,10 +42,10 @@ export const usersToWorkspaces = pgTable(
   {
     userId: text("user_id")
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade" }),
     workspaceId: text("workspace_id")
       .notNull()
-      .references(() => workspaces.id),
+      .references(() => workspaces.id, { onDelete: "cascade" }),
   },
   (t) => ({
     pk: primaryKey(t.userId, t.workspaceId),

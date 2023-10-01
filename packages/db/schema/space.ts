@@ -14,7 +14,9 @@ export const spaces = pgTable(
       .$defaultFn(() => createId())
       .primaryKey()
       .notNull(),
-    workspaceId: text("workspace_id").notNull(),
+    workspaceId: text("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
     title: text("name").notNull(),
     slug: text("slug").notNull(),
     description: text("description").notNull(),

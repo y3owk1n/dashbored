@@ -22,6 +22,13 @@
       "when": 1696156292213,
       "tag": "0002_chemical_yellow_claw",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1696175448342,
+      "tag": "0003_glamorous_bug",
+      "breakpoints": true
     }
   ]
 }
