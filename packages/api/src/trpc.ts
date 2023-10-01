@@ -59,9 +59,21 @@ export const createTRPCContext = async (opts: {
 
   let currentWorkspace: Session["user"]["workspaces"][number] | null = null;
 
-  if (opts.req?.url && opts.req.headers.get("x-dashbored-workspace")) {
-    const workspaceSlug = opts.req.headers.get("x-dashbored-workspace");
+  let parsedSlug: string | undefined;
 
+  if (opts.req?.headers.get("x-dashbored-workspace")) {
+    parsedSlug = opts.req.headers.get("x-dashbored-workspace") ?? undefined;
+  } else if (opts.req?.url && opts.req.headers.get("referer")) {
+    const currentReqPathname = new URL(opts.req.headers.get("referer")!)
+      .pathname;
+    const splittedCurrentReqUrl = currentReqPathname.split("/");
+
+    parsedSlug = splittedCurrentReqUrl[2];
+  } else {
+    parsedSlug = undefined;
+  }
+
+  if (parsedSlug) {
     const userWithWorkspace = await db
       .select()
       .from(usersToWorkspaces)
@@ -70,7 +82,7 @@ export const createTRPCContext = async (opts: {
 
     if (userWithWorkspace.length > 0) {
       const workspaceExists = userWithWorkspace.find(
-        (ws) => ws.workspace?.slug === workspaceSlug,
+        (ws) => ws.workspace?.slug === parsedSlug,
       );
 
       if (workspaceExists?.workspace) {
