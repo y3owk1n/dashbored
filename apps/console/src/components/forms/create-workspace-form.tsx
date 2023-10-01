@@ -46,18 +46,6 @@ export function CreateWorkspaceForm() {
   const watchTitle = form.watch("title");
   const debouncedSlug = useDebounce(watchSlug, 1000);
 
-  const pollSessionWithWorkspace =
-    api.workspace.pollSessionWithWorkspace.useMutation({
-      onSuccess: ({ success, workspaceSlug }) => {
-        if (success) {
-          router.push(`/console/${workspaceSlug}`);
-          router.refresh();
-        }
-      },
-      retry: true,
-      retryDelay: 1000,
-    });
-
   const checkUniqueSlugMutation = api.workspace.checkUniqueSlug.useMutation();
   const createWorkspace = api.workspace.create.useMutation();
 
@@ -101,11 +89,7 @@ export function CreateWorkspaceForm() {
           description: "Redirecting to workspace...",
         });
 
-        router.refresh();
-
-        await pollSessionWithWorkspace.mutateAsync({
-          workspaceSlug: createdWorkspace.slug,
-        });
+        router.push(`/console/${createdWorkspace.slug}`);
       } catch (e) {
         if (e instanceof TRPCError) {
           toast({

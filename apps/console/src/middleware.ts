@@ -55,7 +55,7 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  console.log(">>> Found user", { session });
+  console.log(">>> Found user");
 
   // If there's workspace for the user, redirect to dashboard
   if (session.user.workspaces.length > 0) {
