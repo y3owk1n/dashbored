@@ -71,16 +71,26 @@ export async function middleware(request: NextRequest) {
 
     if (isSlugOwner === -1) {
       const workspaceSelection = new URL(
-        `/console/${session.user.workspaces[0]?.slug}/spaces`,
+        `/console/${session.user.workspaces[0]!.slug}/spaces`,
         origin,
+      );
+
+      const response = NextResponse.redirect(workspaceSelection);
+
+      response.headers.set(
+        "x-dashbored-workspace",
+        session.user.workspaces[0]!.slug,
       );
       console.log(
         `>>> No slug found, redirecting to first found slug: ${workspaceSelection.toString()}`,
       );
-      return NextResponse.redirect(workspaceSelection);
+      return response;
     }
 
-    return NextResponse.next();
+    const response = NextResponse.next();
+    response.headers.set("x-dashbored-workspace", slug!);
+
+    return response;
   }
 
   if (request.nextUrl.pathname !== "/console/onboarding") {
