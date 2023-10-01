@@ -1,10 +1,17 @@
 import * as React from "react";
 import Link from "next/link";
 import { Header } from "@/components/dashboard/header";
+import { DataCard } from "@/components/data-card/spaces/data-card";
+import { RefreshOnFocus } from "@/components/refresh-on-focus";
 import { api } from "@/utils/server-api";
 import { Button, Icons } from "@dashbored/ui";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 import { EmptyState } from "./_components/empty-state";
+import { SpacesCardAction } from "./_components/spaces-card-action";
+
+dayjs.extend(relativeTime);
 
 export default async function SpacesPage() {
   const spaces = await api.space.all.query();
@@ -22,9 +29,27 @@ export default async function SpacesPage() {
           </Button>
         }
       />
-      <div className="col-span-full">
-        <EmptyState />
-      </div>
+
+      {spaces?.length > 0 ? (
+        <div className="col-span-full">
+          {spaces && (
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {spaces.map((space) => (
+                <DataCard
+                  key={space.id}
+                  {...space}
+                  action={<SpacesCardAction />}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="col-span-full">
+          <EmptyState />
+        </div>
+      )}
+      <RefreshOnFocus />
     </div>
   );
 }

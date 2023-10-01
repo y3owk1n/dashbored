@@ -52,7 +52,6 @@ export function CreateSpaceForm() {
     });
 
     return isUnique;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSlug]);
 
   useEffect(() => {

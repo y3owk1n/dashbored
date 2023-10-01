@@ -1,4 +1,15 @@
-import { Blocks, Cog, Loader2Icon, Orbit, Plus, User } from "lucide-react";
+import {
+  Blocks,
+  ChevronDown,
+  Cog,
+  Edit3,
+  Loader2Icon,
+  MoreVertical,
+  Orbit,
+  Plus,
+  Trash2,
+  User,
+} from "lucide-react";
 import type { LucideIcon, LucideProps } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -11,6 +22,10 @@ export const Icons = {
   cog: Cog,
   loader: Loader2Icon,
   plus: Plus,
+  chevronDown: ChevronDown,
+  moreVertical: MoreVertical,
+  edit3: Edit3,
+  trash2: Trash2,
   github: (props: LucideProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
       <path

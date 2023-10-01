@@ -9,4 +9,6 @@ export * from "./input";
 export * from "./textarea";
 export * from "./toast";
 export * from "./sheet";
+export * from "./card";
+export * from "./separator.tsx";
 export * from "./skeleton";

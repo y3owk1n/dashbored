@@ -18,8 +18,12 @@ export const spaces = pgTable(
     title: text("name").notNull(),
     slug: text("slug").notNull(),
     description: text("description").notNull(),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+    createdAt: timestamp("created_at", { precision: 6, withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp("updated_at", { precision: 6, withTimezone: true })
+      .defaultNow()
+      .notNull(),
   },
   (spaces) => ({
     unq: unique().on(spaces.slug, spaces.workspaceId),
