@@ -6,24 +6,24 @@ import "@dashbored/tailwind-config/styles.css";
 import { Toaster } from "@/components/toaster";
 import { cn } from "@dashbored/utils";
 
+import {
+  defaultMetadata,
+  ogMetadata,
+  twitterMetadata,
+} from "./shared-metadata";
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
-  title: "Create T3 Turbo",
-  description: "Simple monorepo with shared backend for web & mobile apps",
-  openGraph: {
-    title: "Create T3 Turbo",
-    description: "Simple monorepo with shared backend for web & mobile apps",
-    url: "https://create-t3-turbo.vercel.app",
-    siteName: "Create T3 Turbo",
-  },
+  ...defaultMetadata,
   twitter: {
-    card: "summary_large_image",
-    site: "@jullerino",
-    creator: "@jullerino",
+    ...twitterMetadata,
+  },
+  openGraph: {
+    ...ogMetadata,
   },
 };
 
