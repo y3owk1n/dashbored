@@ -30,7 +30,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "class-variance-authority": "^0.7.0",
     "lucide-react": "^0.279.0",
-    "react-hook-form": "^7.46.2",
+    "react-hook-form": "^7.47.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {
