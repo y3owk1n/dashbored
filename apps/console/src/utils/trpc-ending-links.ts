@@ -1,6 +1,7 @@
-import type { AppRouter } from "@dashbored/api";
 import type { HTTPBatchLinkOptions, HTTPHeaders, TRPCLink } from "@trpc/client";
 import { httpBatchLink } from "@trpc/client";
+
+import type { AppRouter } from "@dashbored/api";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return "";

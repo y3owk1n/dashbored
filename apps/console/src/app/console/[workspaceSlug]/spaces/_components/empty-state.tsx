@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { EmptyState as DefaultEmptyState } from "@/components/dashboard/empty-state";
+
 import { Button, Icons } from "@dashbored/ui";
 
 export function EmptyState() {

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
+
 import { Icons } from "@dashbored/ui";
 import { cn } from "@dashbored/utils";
 
@@ -23,8 +24,8 @@ export function AppSidebar() {
               <Link
                 href={link}
                 className={cn(
-                  "hover:bg-muted/50 hover:text-foreground text-muted-foreground group flex w-full min-w-[200px] items-center rounded-md border border-transparent px-3 py-1",
-                  isActive && "bg-muted/50 border-border text-foreground", // font-semibold
+                  "group flex w-full min-w-[200px] items-center rounded-md border border-transparent px-3 py-1 text-muted-foreground hover:bg-muted/50 hover:text-foreground",
+                  isActive && "border-border bg-muted/50 text-foreground", // font-semibold
                   disabled && "pointer-events-none opacity-60",
                 )}
               >
@@ -40,10 +41,10 @@ export function AppSidebar() {
           <Link
             href={`/console/${params?.workspaceSlug as string}/settings`}
             className={cn(
-              "hover:bg-muted/50 hover:text-foreground text-muted-foreground group flex w-full min-w-[200px] items-center rounded-md border border-transparent px-3 py-1",
+              "group flex w-full min-w-[200px] items-center rounded-md border border-transparent px-3 py-1 text-muted-foreground hover:bg-muted/50 hover:text-foreground",
               pathname?.startsWith(
                 `/console/${params?.workspaceSlug as string}/settings`,
-              ) && "bg-muted/50 border-border text-foreground",
+              ) && "border-border bg-muted/50 text-foreground",
             )}
           >
             <Icons.cog className={cn("mr-2 h-4 w-4")} />

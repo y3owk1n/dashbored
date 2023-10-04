@@ -2,6 +2,8 @@
 
 import * as React from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { Menu } from "lucide-react";
+
 import {
   Button,
   Sheet,
@@ -10,7 +12,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@dashbored/ui";
-import { Menu } from "lucide-react";
 
 import { AppSidebar } from "./app-sidebar";
 
