@@ -188,8 +188,8 @@ importers:
         specifier: ^13.5.4
         version: 13.5.4(react-dom@18.2.0)(react@18.2.0)
       next-auth:
-        specifier: 0.0.0-manual.b53ca00b
-        version: 0.0.0-manual.b53ca00b(next@13.5.4)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 0.0.0-manual.ffd05533
+        version: 0.0.0-manual.ffd05533(next@13.5.4)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -5163,6 +5163,21 @@ packages:
       next: 13.5.4(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /next-auth@0.0.0-manual.ffd05533(next@13.5.4)(react@18.2.0):
+    resolution: {integrity: sha512-oTdpOP93rzABms/Qgp3z0udQG3tCZ3JxOCnwU04xLgX/xnC8+HuDHct7IcEpz+zxhZp6jxN0tdVkMCs5kubUfw==}
+    peerDependencies:
+      next: ^13.4.13
+      nodemailer: ^6.6.5
+      react: ^18.2.0
+    peerDependenciesMeta:
+      nodemailer:
+        optional: true
+    dependencies:
+      '@auth/core': 0.0.0-manual.e9863699
+      next: 13.5.4(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
     dev: false
 
   /next-tick@1.1.0:
