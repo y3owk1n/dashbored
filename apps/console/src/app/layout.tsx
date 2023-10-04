@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "@dashbored/tailwind-config/styles.css";
 
 import { Toaster } from "@/components/toaster";
+
 import { cn } from "@dashbored/utils";
 
 import {

@@ -1,10 +1,11 @@
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+
 import { desc, ensureSingleItemOrNull, eq, schema } from "@dashbored/db";
 import {
   insertWorkspaceSchema,
   workspaces,
 } from "@dashbored/db/schema/workspace";
-import { TRPCError } from "@trpc/server";
-import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 

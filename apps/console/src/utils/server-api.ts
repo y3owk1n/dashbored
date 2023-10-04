@@ -1,10 +1,11 @@
 "use server";
 
 import { headers } from "next/headers";
-import type { AppRouter } from "@dashbored/api";
 import { loggerLink } from "@trpc/client";
 import { experimental_createTRPCNextAppDirServer as createTRPCNextAppDirServer } from "@trpc/next/app-dir/server";
 import superjson from "superjson";
+
+import type { AppRouter } from "@dashbored/api";
 
 import { endingLink } from "./trpc-ending-links";
 

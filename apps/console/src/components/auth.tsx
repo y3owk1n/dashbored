@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { signIn, signOut } from "next-auth/react";
+
 import type { OAuthProviders } from "@dashbored/auth";
 import { useToast } from "@dashbored/hooks";
 import { Button, DropdownMenuItem, Icons } from "@dashbored/ui";
-import { signIn, signOut } from "next-auth/react";
 
 export function SignIn() {
   const [isLoading, setIsLoading] = useState<boolean>(false);

@@ -1,5 +1,8 @@
 import * as React from "react";
 import Link from "next/link";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
 import {
   Card,
   CardContent,
@@ -8,8 +11,6 @@ import {
   CardTitle,
 } from "@dashbored/ui";
 import { cn } from "@dashbored/utils";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
 
@@ -33,7 +34,7 @@ export function DataCard({
       <Link href={`./${slug}`}>
         <Card
           className={cn(
-            "hover:bg-accent hover:text-accent-foreground flex h-full flex-col justify-between transition-all duration-200 hover:shadow-md",
+            "flex h-full flex-col justify-between transition-all duration-200 hover:bg-accent hover:text-accent-foreground hover:shadow-md",
             action && "pr-14",
           )}
         >
@@ -46,7 +47,7 @@ export function DataCard({
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-muted-foreground flex space-x-4 text-xs">
+            <div className="flex space-x-4 text-xs text-muted-foreground">
               <span>Last Updated {dayjs(updatedAt).fromNow()}</span>
             </div>
           </CardContent>

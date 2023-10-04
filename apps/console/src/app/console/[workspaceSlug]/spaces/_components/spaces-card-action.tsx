@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { DeleteSpaceModalContentForm } from "@/components/forms/delete-space-modal-content-form";
+
 import {
   Button,
   Dialog,
@@ -32,7 +33,7 @@ export function SpacesCardAction({ spaceSlug }: SpacesCardActionProps) {
             size="icon"
             className="rounded-full shadow-none"
           >
-            <Icons.moreVertical className="text-secondary-foreground h-4 w-4" />
+            <Icons.moreVertical className="h-4 w-4 text-secondary-foreground" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent

@@ -1,9 +1,10 @@
 "use client";
 
-import type { AppRouter } from "@dashbored/api";
 import { loggerLink } from "@trpc/client";
 import { experimental_createTRPCNextAppDirClient as createTRPCNextAppDirClient } from "@trpc/next/app-dir/client";
 import superjson from "superjson";
+
+import type { AppRouter } from "@dashbored/api";
 
 import { endingLink } from "./trpc-ending-links";
 

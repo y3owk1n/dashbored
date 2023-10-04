@@ -1,5 +1,6 @@
 import { Header } from "@/components/dashboard/header";
 import { DataCardSkeleton } from "@/components/data-card/data-card-skeleton";
+
 import { Skeleton } from "@dashbored/ui";
 
 export default function Loading() {

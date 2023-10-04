@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+
 // import { auth as middleware } from "@dashbored/auth";
 import type { Session } from "@dashbored/auth";
 

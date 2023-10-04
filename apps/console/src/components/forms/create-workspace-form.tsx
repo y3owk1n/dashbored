@@ -3,6 +3,10 @@
 import { useCallback, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/utils/client-api";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { TRPCError } from "@trpc/server";
+import type { z } from "zod";
+
 import { insertWorkspaceSchema } from "@dashbored/db/schema/workspace";
 import { useDebounce, useToast } from "@dashbored/hooks";
 import {
@@ -20,9 +24,6 @@ import {
   useForm,
 } from "@dashbored/ui";
 import { slugify } from "@dashbored/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { TRPCError } from "@trpc/server";
-import type { z } from "zod";
 
 type Schema = z.infer<typeof insertWorkspaceSchema>;
 
@@ -52,7 +53,6 @@ export function CreateWorkspaceForm() {
     });
 
     return isUnique;
-     
   }, [debouncedSlug]);
 
   useEffect(() => {

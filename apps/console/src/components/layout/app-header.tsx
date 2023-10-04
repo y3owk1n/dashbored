@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+
 import { auth } from "@dashbored/auth";
 import {
   Avatar,
@@ -14,7 +16,6 @@ import {
   Icons,
   Skeleton,
 } from "@dashbored/ui";
-import { ArrowUpRight } from "lucide-react";
 
 import { SignOut } from "../auth";
 import { socialsConfig } from "../config/socials";
@@ -24,11 +25,11 @@ export async function AppHeader() {
   const session = await auth();
 
   return (
-    <header className="border-border sticky top-3 z-50 w-full md:top-6">
-      <Shell className="bg-background/70 flex w-full items-center justify-between px-3 py-3 backdrop-blur-lg md:px-6 md:py-3">
+    <header className="sticky top-3 z-50 w-full border-border md:top-6">
+      <Shell className="flex w-full items-center justify-between bg-background/70 px-3 py-3 backdrop-blur-lg md:px-6 md:py-3">
         <Link
           href={`/${session ? "app" : ""}`}
-          className="text-muted-foreground hover:text-foreground text-lg font-extrabold"
+          className="text-lg font-extrabold text-muted-foreground hover:text-foreground"
         >
           DashBored
         </Link>
